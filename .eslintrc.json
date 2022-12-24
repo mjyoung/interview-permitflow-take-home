@@ -1,0 +1,61 @@
+{
+  "extends": "next/core-web-vitals",
+  "rules": {
+    "@next/next/no-img-element": 0,
+    // sort-imports for sorting destructured imports since this is not
+    // supported by import/order.
+    // https://github.com/import-js/eslint-plugin-import/issues/1670#issuecomment-1018833148
+    "sort-imports": [
+      "error",
+      {
+        "allowSeparatedGroups": true,
+        "ignoreCase": true,
+        "ignoreDeclarationSort": true,
+        "ignoreMemberSort": false,
+        "memberSyntaxSortOrder": ["none", "all", "multiple", "single"]
+      }
+    ],
+    // import/order for all other import sorting
+    "import/order": [
+      "error",
+      {
+        "newlines-between": "always",
+        "groups": [
+          ["builtin", "external"],
+          "internal",
+          ["parent", "sibling", "index"]
+        ],
+        "pathGroups": [
+          {
+            "pattern": "@/assets/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "@/components/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "@/layouts/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "@/pages/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "@/styles/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "@/utils/**",
+            "group": "internal"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["internal"],
+        "alphabetize": {
+          "order": "asc"
+        }
+      }
+    ]
+  }
+}
