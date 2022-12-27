@@ -1,3 +1,37 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* @layer components {
+  .card {
+    @apply rounded-lg border p-4 bg-white
+  }
+  .text-link {
+    @apply text-sky-500 hover:underline
+  }
+}
+
+@layer utilities {
+  .center {
+    @apply flex items-center justify-center
+  }
+} */
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  color: #fefefe;
+  background: #1d1d1d;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
