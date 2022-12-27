@@ -11,6 +11,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
+import Checkbox from '@/components/Checkbox';
 import SectionCard from '@/components/SectionCard';
 import Select from '@/components/Select';
 import MainLayout from '@/layouts/MainLayout';
@@ -23,7 +24,8 @@ export default function Home() {
   );
   const [workType, setWorkType] = useState<WorkType | null>(null);
   const [workArea, setWorkArea] = useState<WorkArea | null>(null);
-  const [workItems, setWorkItems] = useState<WorkItem[]>([]);
+  const [workItems, setWorkItems] = useState<WorkItem[] | null>(null);
+  const [selectedWorkItems, setSelectedWorkItems] = useState<WorkItem[]>([]);
   const router = useRouter();
   const { slug } = router.query;
 
@@ -43,15 +45,17 @@ export default function Home() {
   useEffect(() => {
     if (workArea && workType && municipality) {
       setLoading(true);
-      const fetchMunicipality = async () => {
-        const response = await fetch(`/api/municipalities/${slug}`);
+      const fetchWorkItems = async () => {
+        const response = await fetch(
+          `/api/work-items?workArea=${workArea}&workType=${workType}&municipality=${municipality.slug}`
+        );
         const data = await response.json();
-        setMunicipality(data.data || null);
+        setWorkItems(data.data || null);
         setLoading(false);
       };
-      fetchMunicipality();
+      fetchWorkItems();
     }
-  }, [workArea, workType, municipality, setLoading, slug]);
+  }, [workArea, workType, municipality, setLoading]);
 
   return (
     <>
@@ -101,6 +105,28 @@ export default function Home() {
                   setWorkArea(e.target.value as WorkArea);
                 }}
               />
+            </SectionCard>
+          )}
+
+          {municipality && workType && workArea && workItems && (
+            <SectionCard
+              title={`What sort of ${workArea.toLowerCase()} work are you doing?`}
+            >
+              {workItems.length === 0 && (
+                <p>
+                  No work items available for {workType.toLowerCase()}{' '}
+                  {workArea.toLowerCase()} work in {municipality.displayText}.
+                </p>
+              )}
+              {workItems.length > 0 &&
+                workItems.map((workItem) => (
+                  <Checkbox
+                    key={workItem.id}
+                    id={workItem.id}
+                    label={workItem.displayText}
+                    onChange={(e) => console.log(e.target.value)}
+                  />
+                ))}
             </SectionCard>
           )}
         </div>

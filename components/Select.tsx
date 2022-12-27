@@ -21,9 +21,9 @@ export default function Select({ className, name, options, onChange }: Props) {
         'rounded-lg border border-zinc-600 bg-zinc-700 p-2.5 text-sm text-white placeholder-zinc-700 focus:border-blue-500 focus:ring-blue-500'
       )}
       onChange={onChange}
-      placeholder="Select an option"
+      defaultValue=""
     >
-      <option disabled selected>
+      <option disabled value="">
         Select an option
       </option>
       {options.map((option) => (
