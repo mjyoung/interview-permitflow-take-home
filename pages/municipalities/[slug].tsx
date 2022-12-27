@@ -25,7 +25,7 @@ export default function Home() {
   const [workType, setWorkType] = useState<WorkType | null>(null);
   const [workArea, setWorkArea] = useState<WorkArea | null>(null);
   const [workItems, setWorkItems] = useState<WorkItem[] | null>(null);
-  const [selectedWorkItems, setSelectedWorkItems] = useState<WorkItem[]>([]);
+  const [selectedWorkItems, setSelectedWorkItems] = useState<string[]>([]);
   const router = useRouter();
   const { slug } = router.query;
 
@@ -124,11 +124,26 @@ export default function Home() {
                     key={workItem.id}
                     id={workItem.id}
                     label={workItem.displayText}
-                    onChange={(e) => console.log(e.target.value)}
+                    onChange={(e) => {
+                      if (selectedWorkItems.includes(e.target.value)) {
+                        setSelectedWorkItems(
+                          selectedWorkItems.filter((v) => v !== e.target.value)
+                        );
+                      } else {
+                        setSelectedWorkItems([
+                          ...selectedWorkItems,
+                          e.target.value,
+                        ]);
+                      }
+                    }}
                   />
                 ))}
             </SectionCard>
           )}
+
+          <button className="w-fit rounded bg-sky-700 px-8 py-2 transition-colors duration-300 hover:bg-sky-900">
+            Submit
+          </button>
         </div>
       </MainLayout>
     </>

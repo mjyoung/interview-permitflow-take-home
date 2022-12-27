@@ -7,7 +7,7 @@ interface Props {
 
 export default function SectionCard({ children, title }: Props) {
   return (
-    <div className="card">
+    <div className="animate-fade-in card">
       <h4 className="mb-4 text-xl">{title}</h4>
       {children}
     </div>
