@@ -4,7 +4,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:reset": "dotenv -e .env.development.local -- prisma migrate reset",
+    "db:seed": "dotenv -e .env.development.local -- prisma db seed",
+    "db:seed:prod": "dotenv -e .env.production.local -- prisma db seed",
+    "db:migrate:create": "dotenv -e .env.development.local -- prisma migrate dev --create-only",
+    "db:migrate:dev": "dotenv -e .env.development.local -- prisma migrate dev",
+    "db:migrate:prod": "dotenv -e .env.production.local -- prisma migrate deploy",
+    "prisma:generate": "prisma generate",
+    "prisma:studio": "dotenv -e .env.development.local -- prisma studio"
   },
   "dependencies": {
     "@prisma/client": "4.8.0",

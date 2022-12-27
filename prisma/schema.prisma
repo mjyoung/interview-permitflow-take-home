@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum WorkType {
+  RESIDENTIAL
+  COMMERCIAL
+}
+
+enum WorkArea {
+  EXTERIOR
+  INTERIOR
+}
+
+model JobRequest {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model LocationState {
+  id          String   @id @default(uuid())
+  slug        String   @unique
+  displayText String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  LocationMunicipality LocationMunicipality[]
+}
+
+model LocationMunicipality {
+  id          String   @id @default(uuid())
+  slug        String   @unique
+  displayText String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  locationState     LocationState @relation(fields: [locationStateSlug], references: [slug])
+  locationStateSlug String
+  WorkItem          WorkItem[]
+}
+
+model PermitRequirement {
+  id            String   @id @default(uuid())
+  slug          String   @unique
+  displayText   String
+  requiresPlans Boolean
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  workItems WorkItem[]
+}
+
+model WorkItem {
+  id          String   @id @default(uuid())
+  displayText String
+  workType    WorkType
+  workArea    WorkArea
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  locationMunicipality     LocationMunicipality @relation(fields: [locationMunicipalitySlug], references: [slug])
+  locationMunicipalitySlug String
+  permitRequirement        PermitRequirement    @relation(fields: [permitRequirementSlug], references: [slug])
+  permitRequirementSlug    String
+
+  @@unique([displayText, workType, workArea, locationMunicipalitySlug, permitRequirementSlug])
+}
