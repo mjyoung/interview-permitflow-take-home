@@ -32,7 +32,9 @@ const main = async () => {
     return prisma.permitRequirement.upsert({
       create: item,
       update: item,
-      where: {},
+      where: {
+        slug: item.slug,
+      },
     });
   });
   await Promise.all(promises);

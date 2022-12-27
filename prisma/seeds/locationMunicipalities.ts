@@ -21,7 +21,9 @@ const main = async () => {
     return prisma.locationMunicipality.upsert({
       create: item,
       update: item,
-      where: {},
+      where: {
+        slug: item.slug,
+      },
     });
   });
   await Promise.all(promises);
