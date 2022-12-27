@@ -24,6 +24,8 @@ model JobRequest {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  workItems WorkItem[]
 }
 
 model LocationState {
@@ -67,6 +69,7 @@ model WorkItem {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
+  jobRequests              JobRequest[]
   locationMunicipality     LocationMunicipality @relation(fields: [locationMunicipalitySlug], references: [slug])
   locationMunicipalitySlug String
   permitRequirement        PermitRequirement    @relation(fields: [permitRequirementSlug], references: [slug])
