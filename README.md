@@ -25,3 +25,11 @@ pnpm create next-app --example with-tailwindcss with-tailwindcss-app
 ```
 
 Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+
+
+## TODO:
+
+* Make mobile responsive.
+* Cache results in redis (municipalities, permit rules). Update cache on create/update.
+* More try/catch, handle error states.
+* Write tests.
