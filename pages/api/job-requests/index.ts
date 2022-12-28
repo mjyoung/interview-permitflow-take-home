@@ -1,4 +1,3 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { Prisma } from '@prisma/client';
 import { isEmpty } from 'lodash-es';
 import type { NextApiRequest, NextApiResponse } from 'next';
