@@ -15,6 +15,7 @@ export default async function handler(
       where: { slug: slug as string },
     });
     return res.status(200).json({ data: municipality });
+  } else {
+    return res.status(405).json({ message: 'Method not allowed' });
   }
-  return res.status(405).json({ message: 'Method not allowed' });
 }

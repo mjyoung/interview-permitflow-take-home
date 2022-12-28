@@ -10,6 +10,7 @@ export default async function handler(
   if (req.method === 'GET') {
     const municipalities = await prisma.locationMunicipality.findMany();
     return res.status(200).json({ data: municipalities });
+  } else {
+    return res.status(405).json({ message: 'Method not allowed' });
   }
-  return res.status(405).json({ message: 'Method not allowed' });
 }
