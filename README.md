@@ -1,4 +1,4 @@
-# Michael Young X PermitFlow Take Home
+# Michael Young x PermitFlow Take Home
 
 I’ve deployed the application to Vercel [here](https://michaelyoung-permitflow-take-home.vercel.app/).
 
