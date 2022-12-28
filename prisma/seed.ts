@@ -2,7 +2,8 @@ import { PrismaClient } from '@prisma/client';
 
 import seedLocationMunicipalities from './seeds/locationMunicipalities';
 import seedLocationStates from './seeds/locationStates';
-import seedPermitRequirements from './seeds/permitRequirements';
+import seedPermitProcesses from './seeds/permitProcesses';
+import seedPermitRules from './seeds/permitRules';
 import seedWorkItems from './seeds/workItems';
 
 export const prisma = new PrismaClient();
@@ -13,8 +14,9 @@ export const main = async () => {
   const seeds = [
     seedLocationStates,
     seedLocationMunicipalities,
-    seedPermitRequirements,
+    seedPermitProcesses,
     seedWorkItems,
+    seedPermitRules,
   ];
 
   for (const seed of seeds) {

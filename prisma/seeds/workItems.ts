@@ -1,171 +1,83 @@
 import { Prisma, WorkArea, WorkType } from '@prisma/client';
+
 import { prisma } from '../seed';
 
 const NAME = 'PermitRequirements';
 
-const INTERIOR_RESIDENTIAL: Prisma.WorkItemCreateInput[] = [
+export const INTERIOR_RESIDENTIAL_WORK_ITEMS: Prisma.WorkItemCreateInput[] = [
   {
+    slug: 'ri_new-bathroom',
     displayText: 'New bathroom',
     workType: WorkType.RESIDENTIAL,
     workArea: WorkArea.INTERIOR,
-    locationMunicipality: {
-      connect: {
-        slug: 'san-francisco-ca',
-      },
-    },
-    permitRequirement: {
-      connect: {
-        slug: 'over-the-counter-with-plans',
-      },
-    },
   },
   {
+    slug: 'ri_new-laundry-room',
     displayText: 'New laundry room',
     workType: WorkType.RESIDENTIAL,
     workArea: WorkArea.INTERIOR,
-    locationMunicipality: {
-      connect: {
-        slug: 'san-francisco-ca',
-      },
-    },
-    permitRequirement: {
-      connect: {
-        slug: 'over-the-counter-with-plans',
-      },
-    },
   },
   {
+    slug: 'ri_bathroom-remodel',
     displayText: 'Bathroom remodel',
     workType: WorkType.RESIDENTIAL,
     workArea: WorkArea.INTERIOR,
-    locationMunicipality: {
-      connect: {
-        slug: 'san-francisco-ca',
-      },
-    },
-    permitRequirement: {
-      connect: {
-        slug: 'over-the-counter-no-plans',
-      },
-    },
   },
   {
+    slug: 'ri_other',
     displayText: 'Other',
     workType: WorkType.RESIDENTIAL,
     workArea: WorkArea.INTERIOR,
-    locationMunicipality: {
-      connect: {
-        slug: 'san-francisco-ca',
-      },
-    },
-    permitRequirement: {
-      connect: {
-        slug: 'over-the-counter-no-plans',
-      },
-    },
   },
 ];
 
-const EXTERIOR_RESIDENTIAL: Prisma.WorkItemCreateInput[] = [
+export const EXTERIOR_RESIDENTIAL_WORK_ITEMS: Prisma.WorkItemCreateInput[] = [
   {
+    slug: 're_garage-door-replacement',
     displayText: 'Garage door replacement',
     workType: WorkType.RESIDENTIAL,
     workArea: WorkArea.EXTERIOR,
-    locationMunicipality: {
-      connect: {
-        slug: 'san-francisco-ca',
-      },
-    },
-    permitRequirement: {
-      connect: {
-        slug: 'over-the-counter-with-plans',
-      },
-    },
   },
   {
+    slug: 're_exterior-doors',
     displayText: 'Work on exterior doors',
     workType: WorkType.RESIDENTIAL,
     workArea: WorkArea.EXTERIOR,
-    locationMunicipality: {
-      connect: {
-        slug: 'san-francisco-ca',
-      },
-    },
-    permitRequirement: {
-      connect: {
-        slug: 'over-the-counter-with-plans',
-      },
-    },
   },
   {
+    slug: 're_roofing',
     displayText: 'Re-roofing',
     workType: WorkType.RESIDENTIAL,
     workArea: WorkArea.EXTERIOR,
-    locationMunicipality: {
-      connect: {
-        slug: 'san-francisco-ca',
-      },
-    },
-    permitRequirement: {
-      connect: {
-        slug: 'over-the-counter-no-plans',
-      },
-    },
   },
   {
+    slug: 're_fences_less_than_6_feet',
     displayText: 'Building fences less than 6 feet',
     workType: WorkType.RESIDENTIAL,
     workArea: WorkArea.EXTERIOR,
-    locationMunicipality: {
-      connect: {
-        slug: 'san-francisco-ca',
-      },
-    },
-    permitRequirement: {
-      connect: {
-        slug: 'none',
-      },
-    },
   },
   {
+    slug: 're_other',
     displayText: 'Other',
     workType: WorkType.RESIDENTIAL,
     workArea: WorkArea.EXTERIOR,
-    locationMunicipality: {
-      connect: {
-        slug: 'san-francisco-ca',
-      },
-    },
-    permitRequirement: {
-      connect: {
-        slug: 'in-house-review',
-      },
-    },
   },
 ];
 
 const main = async () => {
   console.info(`Seeding ${NAME}`);
-  const promises = [...INTERIOR_RESIDENTIAL, ...EXTERIOR_RESIDENTIAL].map(
-    (item) => {
-      return prisma.workItem.upsert({
-        create: item,
-        update: item,
-        where: {
-          displayText_workType_workArea_locationMunicipalitySlug_permitRequirementSlug:
-            {
-              displayText: item.displayText,
-              workArea: item.workArea,
-              workType: item.workType,
-              locationMunicipalitySlug: item.locationMunicipality.connect
-                ?.slug as string,
-              permitRequirementSlug: item.permitRequirement.connect
-                ?.slug as string,
-            },
-        },
-      });
-    }
-  );
+  const promises = [
+    ...INTERIOR_RESIDENTIAL_WORK_ITEMS,
+    ...EXTERIOR_RESIDENTIAL_WORK_ITEMS,
+  ].map((item) => {
+    return prisma.workItem.upsert({
+      create: item,
+      update: item,
+      where: {
+        slug: item.slug,
+      },
+    });
+  });
   await Promise.all(promises);
   console.info(`Done seeding ${NAME}`);
 };

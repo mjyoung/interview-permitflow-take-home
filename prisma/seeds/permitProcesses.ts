@@ -1,9 +1,10 @@
 import { Prisma } from '@prisma/client';
+
 import { prisma } from '../seed';
 
-const NAME = 'PermitRequirements';
+const NAME = 'PermitProcesses';
 
-const ITEMS: Prisma.PermitRequirementCreateInput[] = [
+const ITEMS: Prisma.PermitProcessCreateInput[] = [
   {
     slug: 'none',
     displayText: 'No Permit',
@@ -29,7 +30,7 @@ const ITEMS: Prisma.PermitRequirementCreateInput[] = [
 const main = async () => {
   console.info(`Seeding ${NAME}`);
   const promises = ITEMS.map((item) => {
-    return prisma.permitRequirement.upsert({
+    return prisma.permitProcess.upsert({
       create: item,
       update: item,
       where: {

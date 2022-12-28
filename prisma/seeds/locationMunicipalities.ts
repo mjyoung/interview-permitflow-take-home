@@ -1,4 +1,5 @@
 import { Prisma } from '@prisma/client';
+
 import { prisma } from '../seed';
 
 const NAME = 'LocationMunicipalities';
@@ -7,6 +8,15 @@ const ITEMS: Prisma.LocationMunicipalityCreateInput[] = [
   {
     slug: 'san-francisco-ca',
     displayText: 'San Francisco',
+    locationState: {
+      connect: {
+        slug: 'CA',
+      },
+    },
+  },
+  {
+    slug: 'san-jose-ca',
+    displayText: 'San Jose',
     locationState: {
       connect: {
         slug: 'CA',
