@@ -18,6 +18,8 @@ import MainLayout from '@/layouts/MainLayout';
 import { useStore } from '@/utils/store';
 
 export default function Home() {
+  const router = useRouter();
+  const { slug } = router.query;
   const { setLoading } = useStore();
   const [municipality, setMunicipality] = useState<LocationMunicipality | null>(
     null
@@ -26,8 +28,6 @@ export default function Home() {
   const [workArea, setWorkArea] = useState<WorkArea | null>(null);
   const [workItems, setWorkItems] = useState<WorkItem[] | null>(null);
   const [selectedWorkItems, setSelectedWorkItems] = useState<string[]>([]);
-  const router = useRouter();
-  const { slug } = router.query;
 
   useEffect(() => {
     if (slug) {
@@ -57,8 +57,25 @@ export default function Home() {
     }
   }, [workArea, workType, municipality, setLoading]);
 
-  const handleSubmitJobRequest = () => {
-    console.log(selectedWorkItems);
+  const handleSubmitJobRequest = async () => {
+    try {
+      const response = await fetch(`/api/job-requests`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          workItems: selectedWorkItems,
+          municipality: municipality?.slug,
+        }),
+      });
+      const data = await response.json();
+      if (data.data?.id) {
+        router.push(`/job-requests/${data.data.id}`);
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
