@@ -57,6 +57,10 @@ export default function Home() {
     }
   }, [workArea, workType, municipality, setLoading]);
 
+  const handleSubmitJobRequest = () => {
+    console.log(selectedWorkItems);
+  };
+
   return (
     <>
       <Head>
@@ -121,8 +125,8 @@ export default function Home() {
               {workItems.length > 0 &&
                 workItems.map((workItem) => (
                   <Checkbox
-                    key={workItem.id}
-                    id={workItem.id}
+                    key={workItem.slug}
+                    value={workItem.slug}
                     label={workItem.displayText}
                     onChange={(e) => {
                       if (selectedWorkItems.includes(e.target.value)) {
@@ -141,7 +145,11 @@ export default function Home() {
             </SectionCard>
           )}
 
-          <button className="w-fit rounded bg-sky-700 px-8 py-2 transition-colors duration-300 hover:bg-sky-900">
+          <button
+            className="w-fit rounded bg-sky-700 px-8 py-2 transition-colors duration-300 hover:bg-sky-900 disabled:cursor-not-allowed disabled:bg-zinc-700"
+            onClick={handleSubmitJobRequest}
+            disabled={selectedWorkItems.length === 0}
+          >
             Submit
           </button>
         </div>

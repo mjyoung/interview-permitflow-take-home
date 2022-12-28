@@ -15,9 +15,11 @@ export default async function handler(
       return res.status(400).json({ message: 'Missing required query params' });
     const workItems = await prisma.workItem.findMany({
       where: {
+        permitRules: {
+          some: { locationMunicipalitySlug: municipality as string },
+        },
         workArea: workArea as WorkArea,
         workType: workType as WorkType,
-        locationMunicipalitySlug: municipality as string,
       },
     });
     return res

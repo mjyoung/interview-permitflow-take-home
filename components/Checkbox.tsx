@@ -1,20 +1,22 @@
 interface Props {
-  id: string;
+  value: string;
   label: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export default function Checkbox({ id, label, onChange }: Props) {
+export default function Checkbox({ label, value, onChange }: Props) {
   return (
-    <div className="flex gap-2 py-1" key={id}>
+    <div className="flex gap-2 py-1">
       <input
         type="checkbox"
         name="work-item"
-        id={id}
-        value={id}
+        id={value}
+        value={value}
         onChange={onChange}
       />
-      <label htmlFor={id}>{label}</label>
+      <label className="cursor-pointer" htmlFor={value}>
+        {label}
+      </label>
     </div>
   );
 }
