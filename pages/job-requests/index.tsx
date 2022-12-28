@@ -16,13 +16,10 @@ export default function JobRequests() {
   useEffect(() => {
     setLoading(true);
     const fetchJobRequests = async () => {
-      // simulate loading
-      setTimeout(async () => {
-        const response = await fetch('/api/job-requests');
-        const data = await response.json();
-        setJobRequests(data.data || []);
-        setLoading(false);
-      }, 1000);
+      const response = await fetch('/api/job-requests');
+      const data = await response.json();
+      setJobRequests(data.data || []);
+      setLoading(false);
     };
     fetchJobRequests();
   }, [setLoading, setJobRequests]);

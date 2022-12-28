@@ -14,13 +14,10 @@ export default function Home() {
     if (municipalities.length) return;
     setLoading(true);
     const fetchMunicipalities = async () => {
-      // simulate loading
-      setTimeout(async () => {
-        const response = await fetch('/api/municipalities');
-        const data = await response.json();
-        setMunicipalities(data.data || []);
-        setLoading(false);
-      }, 1000);
+      const response = await fetch('/api/municipalities');
+      const data = await response.json();
+      setMunicipalities(data.data || []);
+      setLoading(false);
     };
     fetchMunicipalities();
   }, [municipalities.length, setLoading, setMunicipalities]);
