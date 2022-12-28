@@ -20,7 +20,7 @@ export default function Home() {
         const data = await response.json();
         setMunicipalities(data.data || []);
         setLoading(false);
-      }, 2000);
+      }, 1000);
     };
     fetchMunicipalities();
   }, [municipalities.length, setLoading, setMunicipalities]);
